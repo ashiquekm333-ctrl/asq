@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Round 5 â€“ Set 5 â€“ Question 5</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .q-wrapper {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    .lot-badge {
+      width: 100px; height: 100px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff 0%, #ddd 55%, #bbb 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Orbitron', monospace; font-size: 2.5rem; font-weight: 900;
+      color: #111; box-shadow: 0 0 0 4px rgba(224, 64, 251, 0.55), 0 0 40px rgba(224, 64, 251, 0.4), 0 10px 30px rgba(0,0,0,0.6), inset 0 3px 8px rgba(255,255,255,0.5);
+      margin-bottom: 1rem; position: relative;
+      animation: popIn 0.6s cubic-bezier(.22, 1, .36, 1) both;
+    }
+    .lot-badge::before {
+      content: ''; position: absolute; inset: 0; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55) 0%, transparent 55%);
+    }
+    .q-label {
+      font-family: 'Orbitron', monospace; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.35em; color: var(--purple-200); text-transform: uppercase;
+      margin-bottom: 0.3rem; animation: fadeUp 0.5s ease 0.2s both;
+    }
+    .q-card {
+      max-width: 720px; width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(224, 64, 251, 0.22);
+      border-radius: 20px; padding: 2.5rem 2.8rem; margin: 1rem 0 1.5rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 50px rgba(120, 0, 255, 0.15), 0 20px 50px rgba(0,0,0,0.5);
+      animation: fadeUp 0.7s cubic-bezier(.22, 1, .36, 1) 0.3s both;
+    }
+    .q-num {
+      font-family: 'Orbitron', monospace; font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.3em; color: var(--pink); text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .q-text {
+      font-family: 'Rajdhani', sans-serif; font-size: clamp(1.2rem, 3.5vw, 1.85rem);
+      font-weight: 700; line-height: 1.7; color: #f0e0ff; letter-spacing: 0.04em;
+    }
+    .points-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255, 215, 0, 0.07); border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 30px; padding: 5px 18px;
+      font-family: 'Orbitron', monospace; font-size: 0.78rem; font-weight: 900;
+      color: var(--gold); letter-spacing: 0.15em; margin-bottom: 1.5rem;
+      animation: fadeUp 0.5s ease 0.5s both;
+    }
+    .timer-badge {
+      font-family: 'Orbitron', monospace; font-size: 2.5rem; font-weight: 900;
+      color: #00e676; letter-spacing: 0.1em;
+      text-shadow: 0 0 15px rgba(0, 230, 118, 0.5);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.5s ease 0.4s both;
+      background: rgba(0,0,0,0.5); padding: 10px 30px; border-radius: 50px;
+      border: 2px solid rgba(0, 230, 118, 0.3);
+      transition: color 0.3s, text-shadow 0.3s, border-color 0.3s;
+    }
+    .timer-badge.danger {
+      color: #ff3d00;
+      text-shadow: 0 0 20px rgba(255, 61, 0, 0.8);
+      border-color: rgba(255, 61, 0, 0.6);
+      animation: pulse 1s infinite alternate;
+    }
+    
+    .btn-secondary {
+      background: rgba(120, 0, 255, 0.15);
+      border: 1px solid rgba(160, 80, 255, 0.35);
+      color: var(--purple-200);
+      font-family: 'Orbitron', monospace; font-size: 0.9rem; font-weight: 700;
+      text-transform: uppercase; padding: 1rem 2.5rem; border-radius: 40px;
+      cursor: pointer; transition: all 0.3s; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: 1rem;
+    }
+    .btn-secondary:hover {
+      background: rgba(160, 0, 255, 0.25); border-color: var(--purple-300); color: #fff;
+      box-shadow: 0 0 20px rgba(140, 0, 255, 0.3);
+    }
+    .btn-primary { margin-top: 1rem; text-decoration: none; }
+
+    @keyframes popIn { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.05); } }
+  </style>
+</head>
+<body>
+  <canvas id="starfield"></canvas>
+  <div class="bg-overlay"></div>
+  <div class="q-wrapper">
+    <div class="lot-badge">S5</div>
+    <div class="q-label">Round 5 Â· Set 5</div>
+    
+    <div class="timer-badge" id="timerDisplay">02:00</div>
+
+    <div class="q-card">
+      <div class="q-num">Question 5 of 5</div>
+      <div class="q-text" id="q-content">
+        RUBY AND SAPPHIRE ARE OXIDES OF WHICH ELEMENT
+      </div>
+    </div>
+    
+    <div class="points-badge">&#127942; &nbsp;10 Points</div>
+    
+    <a href="../round5-selection.html" class="btn btn-primary btn-glow" onclick="completeSet(5)">Finish Set & Back to Selection</a>
+    
+  </div>
+  <script>
+    // --- Global 2-Minute Timer Logic ---
+    const timerDisplay = document.getElementById('timerDisplay');
+    const TOTAL_TIME_MS = 120000; // 2 minutes
+    
+    // Check if a timer for this set already exists in localStorage
+    let endTime = localStorage.getItem('sciquest_r5_timer_end');
+    
+    if (!endTime) {
+        // First question of the set, initialize the timer!
+        endTime = Date.now() + TOTAL_TIME_MS;
+        localStorage.setItem('sciquest_r5_timer_end', endTime);
+    } else {
+        endTime = parseInt(endTime);
+    }
+
+    function updateTimer() {
+        const now = Date.now();
+        const remaining = Math.max(0, endTime - now);
+        
+        const minutes = Math.floor(remaining / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000);
+        
+        timerDisplay.textContent = 
+            String(minutes).padStart(2, '0') + ':' + 
+            String(seconds).padStart(2, '0');
+            
+        if (remaining <= 30000) { // 30 seconds left, turn red
+            timerDisplay.classList.add('danger');
+        }
+        
+        if (remaining <= 0) {
+            timerDisplay.textContent = "00:00";
+            document.getElementById('q-content').innerHTML = "<span style='color:#ff3d00'>TIME IS UP!</span>";
+        } else {
+            requestAnimationFrame(updateTimer);
+        }
+    }
+    
+    // Start loop
+    updateTimer();
+    
+    // --- Progression Logic (For Q5 only) ---
+    function completeSet(currentSetNum) {
+        // Unlock next set
+        const nextSet = currentSetNum + 1;
+        const highestUnlocked = parseInt(localStorage.getItem('sciquest_r5_unlocked')) || 1;
+        
+        if (nextSet > highestUnlocked) {
+            localStorage.setItem('sciquest_r5_unlocked', nextSet);
+        }
+        
+        // Timer gets cleared when they click the actual "Set" button on the selection screen, 
+        // to prevent accidental restarts if they go back.
+    }
+
+    // --- Starfield ---
+    (function () { const canvas = document.getElementById('starfield'); const ctx = canvas.getContext('2d'); let stars = []; function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; } function initStars() { stars = []; const c = Math.floor((canvas.width * canvas.height) / 5000); for (let i = 0; i < c; i++)stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 1.5 + 0.2, alpha: Math.random(), delta: (Math.random() * 0.01 + 0.003) * (Math.random() < 0.5 ? 1 : -1), color: Math.random() < 0.2 ? '#e040fb' : Math.random() < 0.15 ? '#ffd700' : '#ffffff' }); } function draw() { ctx.clearRect(0, 0, canvas.width, canvas.height); stars.forEach(s => { s.alpha += s.delta; if (s.alpha <= 0 || s.alpha >= 1) s.delta *= -1; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fillStyle = s.color; ctx.globalAlpha = Math.max(0, Math.min(1, s.alpha)); ctx.fill(); }); ctx.globalAlpha = 1; requestAnimationFrame(draw); } window.addEventListener('resize', () => { resize(); initStars(); }); resize(); initStars(); draw(); })();
+  </script>
+</body>
+</html>
